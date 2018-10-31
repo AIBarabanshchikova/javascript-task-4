@@ -71,13 +71,6 @@ function getEmitter() {
                         subscriber.handler.call(subscriber.context);
                         subscriber.count++;
                     }
-                    // } else {
-                    //     if (subscriber.count % subscriber.frequency === 0) {
-                    //         subscriber.handler.call(subscriber.context)
-                    //         subscriber.count++;
-                    //         subscriber.times--;
-                    //     }
-                    // }
                 });
             }
             if (event.includes('.')) {

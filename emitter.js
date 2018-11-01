@@ -17,6 +17,12 @@ function getEmitter() {
         if (!events[event]) {
             events[event] = [];
         }
+        if (!times) {
+            times = Infinity;
+        }
+        if (!frequency) {
+            frequency = 1;
+        }
 
         events[event].push({ context, handler, times, frequency, count: 0 });
     }
@@ -46,12 +52,6 @@ function getEmitter() {
             console.info(event, context);
             events[event] = events[event].filter(subscriber => subscriber.context !== context);
 
-            // events[event].forEach(eventName => {
-            //     if (eventName === event || eventName.startsWith(event + '.')) {
-            //         events[event] = events[event].filter(subscriber =>
-            //             subscriber.context !== context);
-            //     }
-            // });
             Object.keys(events).filter(eventName => eventName.startsWith(event + '.'))
                 .forEach(e => {
                     events[e] = events[e]
@@ -70,19 +70,26 @@ function getEmitter() {
             console.info(event);
             if (events[event]) {
                 events[event].forEach(subscriber => {
-                    if (subscriber.times === undefined && subscriber.frequency === undefined) {
-                        subscriber.handler.call(subscriber.context);
-                        subscriber.count++;
-                    }
-                    if (subscriber.times) {
+                    // if (subscriber.times === undefined && subscriber.frequency === undefined) {
+                    //     subscriber.handler.call(subscriber.context);
+                    //     subscriber.count++;
+                    // }
+                    // if (subscriber.times) {
+                    //     subscriber.times--;
+                    //     subscriber.handler.call(subscriber.context);
+                    //     subscriber.count++;
+                    // }
+                    // if (subscriber.frequency && subscriber.count % subscriber.frequency === 0) {
+                    //     subscriber.handler.call(subscriber.context);
+                    // }
+                    // if (subscriber.frequency) {
+                    //     subscriber.count++;
+                    // }
+                    if (subscriber.times && subscriber.count % subscriber.frequency === 0) {
                         subscriber.times--;
                         subscriber.handler.call(subscriber.context);
                         subscriber.count++;
-                    }
-                    if (subscriber.frequency && subscriber.count % subscriber.frequency === 0) {
-                        subscriber.handler.call(subscriber.context);
-                    }
-                    if (subscriber.frequency) {
+                    } else {
                         subscriber.count++;
                     }
                 });

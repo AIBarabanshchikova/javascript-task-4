@@ -44,7 +44,7 @@ function getEmitter() {
          */
         off: function (event, context) {
             console.info(event, context);
-            // events[event] = events[event].filter(subscriber => subscriber.context !== context);
+            events[event] = events[event].filter(subscriber => subscriber.context !== context);
 
             // events[event].forEach(eventName => {
             //     if (eventName === event || eventName.startsWith(event + '.')) {
@@ -52,7 +52,7 @@ function getEmitter() {
             //             subscriber.context !== context);
             //     }
             // });
-            Object.keys(events).filter(eventName => eventName.startsWith(event))
+            Object.keys(events).filter(eventName => eventName.startsWith(event + '.'))
                 .forEach(e => {
                     events[e] = events[e]
                         .filter(subscriber => subscriber.context !== context);

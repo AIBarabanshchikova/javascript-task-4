@@ -4,7 +4,7 @@
  * Сделано задание на звездочку
  * Реализованы методы several и through
  */
-const isStar = false;
+const isStar = true;
 
 /**
  * Возвращает новый emitter
@@ -70,21 +70,6 @@ function getEmitter() {
             console.info(event);
             if (events[event]) {
                 events[event].forEach(subscriber => {
-                    // if (subscriber.times === undefined && subscriber.frequency === undefined) {
-                    //     subscriber.handler.call(subscriber.context);
-                    //     subscriber.count++;
-                    // }
-                    // if (subscriber.times) {
-                    //     subscriber.times--;
-                    //     subscriber.handler.call(subscriber.context);
-                    //     subscriber.count++;
-                    // }
-                    // if (subscriber.frequency && subscriber.count % subscriber.frequency === 0) {
-                    //     subscriber.handler.call(subscriber.context);
-                    // }
-                    // if (subscriber.frequency) {
-                    //     subscriber.count++;
-                    // }
                     if (subscriber.times && subscriber.count % subscriber.frequency === 0) {
                         subscriber.times--;
                         subscriber.handler.call(subscriber.context);
@@ -95,7 +80,8 @@ function getEmitter() {
                 });
             }
             if (event.includes('.')) {
-                event = event.split('.')[0];
+                const index = event.lastIndexOf('.');
+                event = event.substring(0, index);
                 emit(event);
             }
 

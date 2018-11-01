@@ -50,7 +50,6 @@ function getEmitter() {
          */
         off: function (event, context) {
             console.info(event, context);
-            // events[event] = events[event].filter(subscriber => subscriber.context !== context);
 
             Object.keys(events).filter(eventName => eventName === event ||
                 eventName.startsWith(event + '.'))

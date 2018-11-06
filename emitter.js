@@ -17,12 +17,6 @@ function getEmitter() {
         if (!events[event]) {
             events[event] = [];
         }
-        if (!times) {
-            times = Infinity;
-        }
-        if (!frequency) {
-            frequency = 1;
-        }
 
         events[event].push({ context, handler, times, frequency, count: 0 });
     }
@@ -37,7 +31,7 @@ function getEmitter() {
          * @returns {any}
          */
         on: function (event, context, handler) {
-            subscribe({ event, context, handler });
+            subscribe({ event, context, handler, times: Infinity, frequency: 1 });
 
             return this;
         },
@@ -99,7 +93,7 @@ function getEmitter() {
          */
         several: function (event, context, handler, times) {
             console.info(event, context, handler, times);
-            subscribe({ event, context, handler, times });
+            subscribe({ event, context, handler, times, frequency: 1 });
 
             return this;
         },
@@ -115,7 +109,7 @@ function getEmitter() {
          */
         through: function (event, context, handler, frequency) {
             console.info(event, context, handler, frequency);
-            subscribe({ event, context, handler, undefined, frequency });
+            subscribe({ event, context, handler, times: Infinity, frequency });
 
             return this;
         }
